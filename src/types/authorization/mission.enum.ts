@@ -1,0 +1,17 @@
+export enum Mission {
+  CMS = 'cms',
+  ALBUM = 'album',
+  AUTHORIZATION = 'authorization',
+  TIMESHEET = 'timesheet',
+  HRM = 'hrm',
+  HRMV2 = 'hrmv2',
+  FACEID = 'face_id',
+  COMMENT = 'comment',
+  LIKE = 'like',
+  WIDGET = 'widget',
+  SETTING = 'setting',
+  ENTITY_TYPE = 'entity_type',
+  UPLOAD_FILE = 'upload_file',
+  USER = 'user',
+  AUDIT_LOG = 'audit_log',
+}

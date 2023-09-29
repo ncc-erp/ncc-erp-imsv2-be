@@ -1,0 +1,43 @@
+pr:
+  - dev
+trigger:
+  - dev
+pool:
+  name: 'IMSv2_DEV'
+jobs:
+  - job: RunE2ETests
+    displayName: 'Run E2E Tests'
+    steps:
+      - script: |
+          npm i -g yarn
+          yarn
+          yarn build
+        displayName: 'Build app'
+
+      - script: yarn test:e2e
+        displayName: 'Run E2E Tests'
+
+  - job: BuildIMSv2NestJs
+    dependsOn: RunE2ETests
+    steps:
+      - script: |
+          cp /home/ncc/devops/backend/Dockerfile ./
+          cp /home/ncc/devops/backend/entrypoint.sh ./
+          sed -i 's/KOMU_SERVICE_SECURITY_CODE=/KOMU_SERVICE_SECURITY_CODE=$(KOMU_SERVICE_SECURITY_CODE)/' ./.env.dev
+        displayName: 'Get necessary files and replace directory'
+
+      - script: docker build -t imsv2-be-dev:latest --build-arg='STAGE=development' --build-arg='PORT=4000' .
+        displayName: 'Build backend develop image'
+
+      - task: ArchiveFiles@2
+        inputs:
+          rootFolderOrFile: '$(Build.SourcesDirectory)'
+          includeRootFolder: false
+          archiveType: 'zip'
+          archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+          ArtifactName: 'develop-be-imsv2'
+          publishLocation: 'Container'

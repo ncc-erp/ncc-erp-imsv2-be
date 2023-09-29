@@ -1,0 +1,15 @@
+version: '3'
+services:
+    backend:
+      image: imsv2-be-dev:latest
+      tty: true
+      restart: unless-stopped
+      networks:
+        - backend_network
+      volumes:
+        - /var/log/imsv2:/root/.pm2/logs/
+
+networks:
+  backend_network:
+    name: gateway_network
+    external: true
