@@ -171,6 +171,9 @@ ncc-erp-imsv2-be
 └── yarn.lock
 ```
 
+## Documentation
+Please visit this link: [Google Docs](https://docs.google.com/document/d/12bVUcqXqbnTE_D_7C8nLqG185JMnF4k0rxCfUnZvUrY/edit#heading=h.klmo98hrpnn2)
+
 ## License
 The MIT License (MIT)
 
